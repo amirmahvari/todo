@@ -21,7 +21,7 @@ class TodoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/Database/migrations');
         $this->publishes([
             realpath(__DIR__ . '/migrations') => database_path('migrations') ,
         ] , 'migrations');
@@ -30,5 +30,6 @@ class TodoServiceProvider extends ServiceProvider
         $this->publishes([
             realpath(__DIR__ . '/views') => base_path('resources/views/Amirabbas8643/Todo') ,
         ]);
+        $this->loadFactoriesFrom(__DIR__ . '/Database/factories');
     }
 }
