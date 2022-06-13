@@ -8,8 +8,8 @@ Min laravel version is 7.*
 
 Make directory in your laravel project ,open your command line.
 ```bash
-mkdir packages
-cd packages
+mkdir packages/amirabbas8643
+cd packages/amirabbas8643
 git clone https://github.com/amirabbas8643/todo.git
 ```
 
@@ -50,7 +50,13 @@ composer dumpautoload
 ```
 
 
-migrate your migrations.
+publish package
+```bash
+php artisan vendor:publish --provider="Amirabbas8643\Todo\TodoServiceProvider"
+```
+
+
+migrate the migrations.
 ```shell
 php artisan migrate
 ```
