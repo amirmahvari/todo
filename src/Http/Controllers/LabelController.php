@@ -30,7 +30,7 @@ class LabelController extends Controller
      */
     public function index()
     {
-        return view('label.index' , [
+        return view('Todo::label.index' , [
             'labels'     => $this->labelService->getLabels() ,
             'pageTitle' => 'Label List',
         ]);
@@ -42,7 +42,7 @@ class LabelController extends Controller
      */
     public function create()
     {
-        return view('label.create' , [
+        return view('Todo::label.create' , [
             'pageTitle' => __('Create Label') ,
         ]);
     }
@@ -78,7 +78,7 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        return view('label.edit' , [
+        return view('Todo::label.edit' , [
             'label'      => $label ,
             'pageTitle' => __('Edit Label'),
         ]);
