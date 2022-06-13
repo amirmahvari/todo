@@ -61,6 +61,8 @@ migrate the migrations.
 php artisan migrate
 ```
 
+the routes list is /task and /label .
+
 
 ## Testing
 
