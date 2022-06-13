@@ -6,7 +6,6 @@ use Amirabbas8643\Todo\Http\Requests\Task\TaskUpdateRequest;
 use Amirabbas8643\Todo\Http\Resources\TaskEditResource;
 use Amirabbas8643\Todo\Service\LabelService;
 use Amirabbas8643\Todo\Service\TaskService;
-use App\Http\Controllers\Controller;
 use Amirabbas8643\Todo\Models\Task;
 use Illuminate\Http\Response;
 
@@ -17,6 +16,11 @@ class TaskController extends Controller
 
     public function __construct(TaskService $taskService , LabelService $labelService)
     {
+        $this->middleware([
+            \Illuminate\Session\Middleware\StartSession::class ,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class ,
+            'auth'
+        ]);
         $this->taskService = $taskService;
         $this->labelService = $labelService;
     }
