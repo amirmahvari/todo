@@ -12,6 +12,6 @@ $factory->define(Task::class , function(Faker $faker)
         'title'        => $faker->title ,
         'description' => $faker->text ,
         'status'      => 'open' ,
-        'user_id'     => factory(User::class,1)->create()->first()->id,
+        'user_id'     => factory(User::class)->create()->first()->id,
     ];
 });

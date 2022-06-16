@@ -1,13 +1,14 @@
 <?php
+
 namespace Amirabbas8643\Todo\Tests\Feature;
 
 use Amirabbas8643\Todo\Models\Task;
 use App\User;
-use Illuminate\Session\Middleware\StartSession;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
+
     /**
      * A basic feature test example.
      * test  create task
@@ -16,7 +17,9 @@ class TaskTest extends TestCase
     public function test_store_a_task()
     {
         $attributes = factory(Task::class)->make();
-        $this->actingAs(factory(User::class)->create()->first()->id)
+        $this->actingAs(factory(User::class)
+            ->create()
+            ->first())
             ->post(route('task.store') , $attributes->toArray())
             ->assertStatus(302);
         $this->assertDatabaseHas('tasks' , $attributes->toArray());
@@ -29,7 +32,7 @@ class TaskTest extends TestCase
     {
         $this->actingAs(User::first())
             ->post(route('task.store'))
-            ->assertSessionHasErrors(['title','description'])
+            ->assertSessionHasErrors(['title' , 'description'])
             ->assertStatus(302);
     }
 
@@ -38,9 +41,9 @@ class TaskTest extends TestCase
      */
     public function test_authorize_edit_task()
     {
-        $task=factory(Task::class,1)->create()->first();
+        $task=factory(Task::class)->create()->first();
         $this->actingAs(User::first())
-            ->get(route('task.edit',$task))
+            ->get(route('task.edit' , $task))
             ->assertStatus(403);
     }
 
@@ -49,12 +52,12 @@ class TaskTest extends TestCase
      */
     public function test_show_edit_task()
     {
-        $task=factory(Task::class)->create()->first();
+        $task = factory(Task::class)->create()->first();
         $this->actingAs($task->user)
-            ->get(route('task.edit',$task))
+            ->get(route('task.edit' , $task))
             ->assertStatus(200)
             ->assertViewIs('task.edit')
-            ->assertViewHasAll(['task'=>$task]);
+            ->assertViewHasAll(['task' => $task]);
     }
 
     /**
@@ -62,9 +65,11 @@ class TaskTest extends TestCase
      */
     public function test_authorize_update_task()
     {
-        $task=factory(Task::class,1)->create()->first();
+        $task = factory(Task::class , 1)
+            ->create()
+            ->first();
         $this->actingAs(User::first())
-            ->patch(route('task.update',$task))
+            ->patch(route('task.update' , $task))
             ->assertStatus(403);
     }
 
@@ -73,12 +78,15 @@ class TaskTest extends TestCase
      */
     public function test_update_validation()
     {
-        $task=factory(Task::class)->create()->first();
+        $task = factory(Task::class)
+            ->create()
+            ->first();
         $this->actingAs($task->user)
-            ->patch(route('task.update',$task))
-            ->assertSessionHasErrors(['title','description'])
+            ->patch(route('task.update' , $task))
+            ->assertSessionHasErrors(['title' , 'description'])
             ->assertStatus(302);
     }
+
     /**
      * test update task
      */

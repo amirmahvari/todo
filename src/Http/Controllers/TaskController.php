@@ -8,6 +8,8 @@ use Amirabbas8643\Todo\Service\LabelService;
 use Amirabbas8643\Todo\Service\TaskService;
 use Amirabbas8643\Todo\Models\Task;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class TaskController extends Controller
 {
@@ -40,7 +42,7 @@ class TaskController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      */
     public function create()
     {
@@ -54,7 +56,7 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Redirector
      */
     public function store(TaskStoreRequest $request)
     {
@@ -80,11 +82,11 @@ class TaskController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Task $task
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      */
-    public function edit(Task $task)
+    public function edit(Task $task): View
     {
-        $this->authorize('Todo::update' , $task);
+        $this->authorize('update' , $task);
         return view('task.edit' , [
             'labels'    => $this->labelService->getList() ,
             'task'      => (new TaskEditResource($task))->resolve() ,
@@ -97,7 +99,7 @@ class TaskController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Task $task
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Redirector
      */
     public function update(TaskUpdateRequest $request , Task $task)
     {
