@@ -33,7 +33,6 @@ class TodoServiceProvider extends ServiceProvider
         $this->config();
         $this->loaded();
         $this->publishes([
-            realpath(__DIR__ . '/views')               => base_path('resources/views/Amirmahvari/Todo'),
             realpath(__DIR__ . '/Database/migrations') => database_path('migrations'),
         ]);
 
