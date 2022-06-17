@@ -1,58 +1,62 @@
 <?php
+
 namespace Amirabbas8643\Todo\Http\Controllers\Api;
 
+use Amirabbas8643\Todo\Http\Controllers\Controller;
+use Amirabbas8643\Todo\Http\Facades\JsonResponse;
 use Amirabbas8643\Todo\Http\Requests\Label\LabelStoreRequest;
 use Amirabbas8643\Todo\Http\Requests\Label\LabelUpdateRequest;
-use App\Http\Controllers\Controller;
-use Amirabbas8643\Todo\Service\LabelService;
+use Amirabbas8643\Todo\Http\Resources\LabelResource;
 use Amirabbas8643\Todo\Models\Label;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Amirabbas8643\Todo\Service\LabelService;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class LabelController extends Controller
 {
+
     private $labelService;
 
     public function __construct(LabelService $labelService)
     {
-        $this->middleware(['auth:web']);
         $this->labelService = $labelService;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function index()
     {
-        return view('Todo::label.index' , [
-            'labels'     => $this->labelService->getLabels() ,
-            'pageTitle' => 'Label List',
-        ]);
+        $labels = $this->labelService->getLabels();
+        $labels->setCollection(LabelResource::collection($labels->getCollection())->collection);
+
+        return JsonResponse::success($labels);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function store(LabelStoreRequest $request)
     {
-        $this->labelService->createLabel($request);
-        return redirect(route('label.index'));
+        $label = $this->labelService->createLabel($request);
+
+
+        return JsonResponse::success(new LabelResource($label) , __('Created Label'));
     }
 
     /**
      * Display the specified resource.
      *
      * @param Label $label
-     * @return Response
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function show(Label $label)
     {
-
+        return JsonResponse::success((new LabelResource($label)));
     }
 
     /**
@@ -60,23 +64,25 @@ class LabelController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Label $label
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function update(LabelUpdateRequest $request , Label $label)
     {
         $this->labelService->updateLabel($request , $label);
-        return redirect(route('label.index'));
+
+        return JsonResponse::success(new LabelResource($label) , __('Updated Label'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Label $label
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function destroy(Label $label)
     {
         $this->labelService->delete($label);
-        return redirect(route('label.index'));
+
+        return JsonResponse::success(null , __('Deleted Label'));
     }
 }

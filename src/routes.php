@@ -25,12 +25,20 @@ Route::group([
                 ->name('update');
             Route::delete('destroy/{task}' , [TaskController::class , 'destroy'])
                 ->name('destroy');
-
         });
-    Route::group(['prefix' => 'labels/'] , function()
-    {
-        Route::get('' , [LabelController::class , 'index']);
-        Route::get('{id}' , [LabelController::class , 'show']);
-        Route::post('' , [LabelController::class , 'store']);
-    });
+    Route::prefix('label')
+        ->name('label.')
+        ->group(function()
+        {
+            Route::get('' , [LabelController::class , 'index'])
+                ->name('index');
+            Route::get('{label}' , [LabelController::class , 'show'])
+                ->name('show');
+            Route::post('' , [LabelController::class , 'store'])
+                ->name('store');
+            Route::patch('{label}' , [LabelController::class , 'update'])
+                ->name('update');
+            Route::delete('destroy/{label}' , [LabelController::class , 'destroy'])
+                ->name('destroy');
+        });
 });

@@ -11,7 +11,8 @@ class LabelService
      */
     public function getLabels($length = 10)
     {
-        return Label::orderBy('id','desc')
+        return Label::withCount('tasks')
+            ->orderBy('id','desc')
             ->paginate($length);
     }
 
@@ -48,6 +49,7 @@ class LabelService
 
     public function delete(Label $label)
     {
+        $label->tasks()->detach();
         $label->delete();
     }
 }
