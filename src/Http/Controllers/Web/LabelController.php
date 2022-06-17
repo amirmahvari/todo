@@ -1,11 +1,11 @@
 <?php
-namespace Amirabbas8643\Todo\Http\Controllers\Web;
+namespace Amirmahvari\Todo\Http\Controllers\Web;
 
-use Amirabbas8643\Todo\Http\Requests\Label\LabelStoreRequest;
-use Amirabbas8643\Todo\Http\Requests\Label\LabelUpdateRequest;
+use Amirmahvari\Todo\Http\Requests\Label\LabelStoreRequest;
+use Amirmahvari\Todo\Http\Requests\Label\LabelUpdateRequest;
 use App\Http\Controllers\Controller;
-use Amirabbas8643\Todo\Service\LabelService;
-use Amirabbas8643\Todo\Models\Label;
+use Amirmahvari\Todo\Service\LabelService;
+use Amirmahvari\Todo\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

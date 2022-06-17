@@ -1,5 +1,5 @@
 <?php
-namespace Amirabbas8643\Todo\Http\Requests\Label;
+namespace Amirmahvari\Todo\Http\Requests\Label;
 
 use Illuminate\Foundation\Http\FormRequest;
 

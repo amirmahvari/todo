@@ -1,5 +1,5 @@
 <?php
-namespace Amirabbas8643\Todo\Models;
+namespace Amirmahvari\Todo\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

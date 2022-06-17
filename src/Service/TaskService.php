@@ -1,6 +1,6 @@
 <?php
-namespace Amirabbas8643\Todo\Service;
-use Amirabbas8643\Todo\Models\Task;
+namespace Amirmahvari\Todo\Service;
+use Amirmahvari\Todo\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskService

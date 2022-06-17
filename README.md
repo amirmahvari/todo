@@ -8,9 +8,9 @@ Min laravel version is 7.*
 
 Make directory in your laravel project ,open your command line.
 ```bash
-mkdir packages/amirabbas8643
-cd packages/amirabbas8643
-git clone https://github.com/amirabbas8643/todo.git
+mkdir packages/amirmahvari
+cd packages/amirmahvari
+git clone https://github.com/amirmahvari/todo.git
 ```
 
 
@@ -23,7 +23,7 @@ By default, the module classes are not loaded automatically. You can autoload yo
   "autoload": {
     "psr-4": {
       "App\\": "app/",
-      "Amirabbas8643\\Todo\\": "packages/amirabbas8643/todo/src"
+      "Amirmahvari\\Todo\\": "packages/amirmahvari/todo/src"
   }
 }
 ```
@@ -39,7 +39,7 @@ Append Todo  service provider to `providers` array in `config/app.php`.
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         ...
-        Amirabbas8643\Todo\TodoServiceProvider::class,
+        Amirmahvari\Todo\TodoServiceProvider::class,
         ...
 ],
 ```
@@ -52,7 +52,7 @@ composer dumpautoload
 
 publish package
 ```bash
-php artisan vendor:publish --provider="Amirabbas8643\Todo\TodoServiceProvider"
+php artisan vendor:publish --provider="Amirmahvari\Todo\TodoServiceProvider"
 ```
 
 

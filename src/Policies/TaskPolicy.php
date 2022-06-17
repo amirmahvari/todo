@@ -1,7 +1,7 @@
 <?php
-namespace Amirabbas8643\Todo\Policies;
+namespace Amirmahvari\Todo\Policies;
 
-use Amirabbas8643\Todo\Models\Task;
+use Amirmahvari\Todo\Models\Task;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

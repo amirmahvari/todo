@@ -1,7 +1,7 @@
 <?php
-namespace Amirabbas8643\Todo\Service;
+namespace Amirmahvari\Todo\Service;
 
-use Amirabbas8643\Todo\Models\Label;
+use Amirmahvari\Todo\Models\Label;
 use Illuminate\Http\Request;
 
 class LabelService

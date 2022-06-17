@@ -1,6 +1,6 @@
 <?php
 
-namespace Amirabbas8643\Todo\Http\Controllers;
+namespace Amirmahvari\Todo\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

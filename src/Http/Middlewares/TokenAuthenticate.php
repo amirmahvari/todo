@@ -1,8 +1,8 @@
 <?php
 
-namespace Amirabbas8643\Todo\Http\Middlewares;
+namespace Amirmahvari\Todo\Http\Middlewares;
 
-use Amirabbas8643\Todo\Http\Facades\JsonResponse;
+use Amirmahvari\Todo\Http\Facades\JsonResponse;
 use App\User;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;

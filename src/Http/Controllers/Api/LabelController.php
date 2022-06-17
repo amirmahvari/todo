@@ -1,14 +1,14 @@
 <?php
 
-namespace Amirabbas8643\Todo\Http\Controllers\Api;
+namespace Amirmahvari\Todo\Http\Controllers\Api;
 
-use Amirabbas8643\Todo\Http\Controllers\Controller;
-use Amirabbas8643\Todo\Http\Facades\JsonResponse;
-use Amirabbas8643\Todo\Http\Requests\Label\LabelStoreRequest;
-use Amirabbas8643\Todo\Http\Requests\Label\LabelUpdateRequest;
-use Amirabbas8643\Todo\Http\Resources\LabelResource;
-use Amirabbas8643\Todo\Models\Label;
-use Amirabbas8643\Todo\Service\LabelService;
+use Amirmahvari\Todo\Http\Controllers\Controller;
+use Amirmahvari\Todo\Http\Facades\JsonResponse;
+use Amirmahvari\Todo\Http\Requests\Label\LabelStoreRequest;
+use Amirmahvari\Todo\Http\Requests\Label\LabelUpdateRequest;
+use Amirmahvari\Todo\Http\Resources\LabelResource;
+use Amirmahvari\Todo\Models\Label;
+use Amirmahvari\Todo\Service\LabelService;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class LabelController extends Controller
@@ -24,7 +24,7 @@ class LabelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
+     * @return \Amirmahvari\Todo\Http\Responses\JsonResponse
      */
     public function index()
     {
@@ -38,7 +38,7 @@ class LabelController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
+     * @return \Amirmahvari\Todo\Http\Responses\JsonResponse
      */
     public function store(LabelStoreRequest $request)
     {
@@ -52,7 +52,7 @@ class LabelController extends Controller
      * Display the specified resource.
      *
      * @param Label $label
-     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
+     * @return \Amirmahvari\Todo\Http\Responses\JsonResponse
      */
     public function show(Label $label)
     {
@@ -64,7 +64,7 @@ class LabelController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Label $label
-     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
+     * @return \Amirmahvari\Todo\Http\Responses\JsonResponse
      */
     public function update(LabelUpdateRequest $request , Label $label)
     {
@@ -77,7 +77,7 @@ class LabelController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Label $label
-     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
+     * @return \Amirmahvari\Todo\Http\Responses\JsonResponse
      */
     public function destroy(Label $label)
     {

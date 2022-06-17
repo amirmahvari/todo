@@ -1,5 +1,5 @@
 <?php
-namespace Amirabbas8643\Todo\Models;
+namespace Amirmahvari\Todo\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;

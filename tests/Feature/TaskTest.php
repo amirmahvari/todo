@@ -1,8 +1,8 @@
 <?php
 
-namespace Amirabbas8643\Todo\Tests\Feature;
+namespace Amirmahvari\Todo\Tests\Feature;
 
-use Amirabbas8643\Todo\Models\Task;
+use Amirmahvari\Todo\Models\Task;
 use App\User;
 use Tests\TestCase;
 

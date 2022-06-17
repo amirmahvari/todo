@@ -1,9 +1,9 @@
 {
-    "name": "amirabbas8643/todo",
+    "name": "amirmahvari/todo",
     "description": "Implementing a todo system for laravel 7",
     "autoload": {
         "psr-4": {
-            "Amirabbas8643\\Todo\\": "src/"
+            "Amirmahvari\\Todo\\": "src/"
         }
     },
     "authors": [
