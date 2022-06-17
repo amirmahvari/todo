@@ -17,7 +17,7 @@ Route::group([
             Route::get('{task}' , [TaskController::class , 'show'])->name('show');
             Route::post('' , [TaskController::class , 'store'])->name('store');
             Route::post('{task}/status' , [TaskController::class , 'status'])->name('status');
-            Route::put('{id}' , [TaskController::class , 'update'])->name('update');
+            Route::patch('{id}' , [TaskController::class , 'update'])->name('update');
             Route::group(['prefix' => '{task}/labels/'] , function()
             {
                 Route::post('' , [TaskController::class , 'addLabels']);

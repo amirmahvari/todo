@@ -38,18 +38,17 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return Redirector
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function store(TaskStoreRequest $request)
     {
-        dd('$vars');
         $task = $this->taskService->createTask($request);
         if(is_array($request->get('labels')))
         {
             $this->taskService->attachLabels($task , $request->get('labels'));
         }
 
-        return redirect(route('task.index'));
+        return JsonResponse::success(new TaskResource($task),__('Created Task'));
     }
 
     /**
