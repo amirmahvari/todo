@@ -46,22 +46,22 @@ class TaskTest extends TestCase
     }
 
     /**
-     * Check Users can only edit their own
+     * Check Users can only show their own
      */
     public function test_authorize_show_task()
     {
         $task = factory(Task::class)
             ->create()
             ->first();
-        $this->actingAs(User::first())
-            ->get(route('task.edit', $task))
+        $this->loginAs(factory(User::class,1)->create()->first())
+            ->json('GET',route('task.show', $task))
             ->assertStatus(403);
     }
 
     /**
      *  Users check view and data
      */
-    public function test_show_show_task()
+    public function test_show_task()
     {
         $task = factory(Task::class)
             ->create()
