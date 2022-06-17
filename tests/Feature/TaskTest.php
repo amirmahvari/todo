@@ -17,12 +17,12 @@ class TaskTest extends TestCase
     public function test_store_a_task()
     {
         $attributes = factory(Task::class)->make();
-        $this->actingAs(factory(User::class)
+        $response = $this->actingAs(factory(User::class)
             ->create()
             ->first())
             ->post(route('task.store') , $attributes->toArray())
-            ->assertStatus(302);
-        $this->assertDatabaseHas('tasks' , $attributes->toArray());
+            ->assertStatus(200);
+        $this->assertEquals($response['data']['title'] , $attributes->toArray()['title']);
     }
 
     /**
@@ -41,7 +41,9 @@ class TaskTest extends TestCase
      */
     public function test_authorize_edit_task()
     {
-        $task=factory(Task::class)->create()->first();
+        $task = factory(Task::class)
+            ->create()
+            ->first();
         $this->actingAs(User::first())
             ->get(route('task.edit' , $task))
             ->assertStatus(403);
@@ -52,7 +54,9 @@ class TaskTest extends TestCase
      */
     public function test_show_edit_task()
     {
-        $task = factory(Task::class)->create()->first();
+        $task = factory(Task::class)
+            ->create()
+            ->first();
         $this->actingAs($task->user)
             ->get(route('task.edit' , $task))
             ->assertStatus(200)
@@ -82,8 +86,13 @@ class TaskTest extends TestCase
             ->create()
             ->first();
         $this->actingAs($task->user)
+            ->withHeaders([
+                'Authorization'    => 'Bearer ' . $task->user->api_token ,
+                "Content-Type"     => "application/json" ,
+                "X-Requested-With" => "XMLHttpRequest",
+            ])
             ->patch(route('task.update' , $task))
-            ->assertSessionHasErrors(['title' , 'description'])
+            ->assertJsonValidationErrors(['title' , 'description'])
             ->assertStatus(302);
     }
 
