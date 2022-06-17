@@ -56,6 +56,16 @@ php artisan vendor:publish --provider="Amirmahvari\Todo\TodoServiceProvider"
 ```
 
 
+token middleware to kernel
+```php
+   protected $routeMiddleware = [
+        'auth' => \App\Http\Middleware\Authenticate::class,
+      ...
+        'token' => \Amirmahvari\Todo\Http\Middlewares\TokenAuthenticate::class,
+      ...
+```
+
+
 migrate the migrations.
 ```shell
 php artisan migrate
