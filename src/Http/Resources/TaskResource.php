@@ -18,7 +18,7 @@ class TaskResource extends JsonResource
             'title'       => $this->title ,
             'description' => $this->description ,
             'status'      => $this->status ,
-            'labels'      => LabelResource::collection($this->labels ),
+            'labels'      => LabelResource::collection($this->labels->loadCount('tasks') ),
         ];
     }
 }

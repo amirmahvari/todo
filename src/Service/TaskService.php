@@ -10,7 +10,8 @@ class TaskService
      */
     public function getMyTasks($length = 10)
     {
-        return Task::where('user_id' , auth()->id())
+        return Task::with('labels')
+            ->where('user_id' , auth()->id())
             ->orderBy('id','desc')
             ->paginate($length);
     }
