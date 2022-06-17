@@ -14,7 +14,7 @@ class JsonResponse
      *
      * success request with return data
      */
-    public function success(array $data = [] , string $message = 'success')
+    public function success( $data = null , string $message = 'success')
     {
         return response()->json([
             'status'  => Response::HTTP_OK ,
@@ -32,7 +32,7 @@ class JsonResponse
      *
      * error request with list errors
      */
-    public function error(string $status , array $data = [] , string $message = 'error')
+    public function error(string $status ,  $data = null , string $message = 'error')
     {
         return response()->json([
             'status'  => $status ,

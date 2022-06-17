@@ -2,6 +2,7 @@
 
 namespace Amirabbas8643\Todo;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +32,7 @@ class TodoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        JsonResource::withoutWrapping();
         $this->publishes([
             realpath(__DIR__ . '/views')               => base_path('resources/views/Amirabbas8643/Todo') ,
             realpath(__DIR__ . '/Database/migrations') => database_path('migrations') ,
