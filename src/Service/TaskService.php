@@ -1,5 +1,7 @@
 <?php
+
 namespace Amirmahvari\Todo\Service;
+
 use Amirmahvari\Todo\Models\Task;
 use Illuminate\Http\Request;
 
@@ -11,8 +13,8 @@ class TaskService
     public function getMyTasks($length = 10)
     {
         return Task::with('labels')
-            ->where('user_id' , auth()->id())
-            ->orderBy('id','desc')
+            ->where('user_id', auth()->id())
+            ->orderBy('id', 'desc')
             ->paginate($length);
     }
 
@@ -21,13 +23,13 @@ class TaskService
      * @param $user_id
      * @return array
      */
-    protected function binding(Request $request , $user_id): array
+    protected function binding(Request $request, $user_id): array
     {
         return [
-            'title'       => $request->get('title') ,
-            'description' => $request->get('description') ,
-            'status'      => $request->get('status' , 'open') ,
-            'user_id'     => $user_id ,
+            'title'       => $request->get('title'),
+            'description' => $request->get('description'),
+            'status'      => 'open',
+            'user_id'     => $user_id,
         ];
     }
 
@@ -37,27 +39,57 @@ class TaskService
      */
     public function createTask(Request $request): Task
     {
-        return Task::create($this->binding($request , auth()->id()));
+        return Task::create($this->binding($request, auth()->id()));
     }
 
-    public function attachLabels(Task $task,array $labels)
+    /**
+     * @param Task $task
+     * @param array $labels
+     */
+    public function attachLabels(Task $task, array $labels)
     {
         $task->labels()->attach($labels);
     }
 
-    public function syncLabels(Task $task,array $labels)
+    /**
+     * @param Task $task
+     * @param array $labels
+     */
+    public function syncLabels(Task $task, array $labels)
     {
         $task->labels()->sync($labels);
     }
 
-    public function updateTask(Request $request , Task $task)
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return bool
+     */
+    public function updateTask(Request $request, Task $task)
     {
-        return $task->update($this->binding($request , $task->user_id));
+        return $task->update($this->binding($request, $task->user_id));
     }
 
+    /**
+     * @param Task $task
+     * @return bool|null
+     * @throws \Exception
+     */
     public function delete(Task $task)
     {
         $task->labels()->detach();
-       return $task->delete();
+        return $task->delete();
+    }
+
+
+    /**
+     * @param Task $task
+     * @return bool|null
+     * @throws \Exception
+     * change status
+     */
+    public function changeStatus(Task $task, $status)
+    {
+        return $task->update(['status' => $status]);
     }
 }

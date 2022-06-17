@@ -4,7 +4,7 @@ namespace Amirmahvari\Todo\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskUpdateRequest extends FormRequest
+class TaskStatusRequest extends FormRequest
 {
 
     /**
@@ -25,9 +25,7 @@ class TaskUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => ['required'] ,
-            'description' => ['required'] ,
-            'labels.*'    => ['nullable' , 'exists:labels,id'] ,
+            'status' => ['required', 'in:open,close'],
         ];
     }
 }

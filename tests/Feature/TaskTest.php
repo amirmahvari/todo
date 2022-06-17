@@ -3,6 +3,7 @@
 namespace Amirmahvari\Todo\Tests\Feature;
 
 use Amirmahvari\Todo\Http\Resources\LabelResource;
+use Amirmahvari\Todo\Http\Resources\TaskResource;
 use Amirmahvari\Todo\Models\Task;
 use App\User;
 use Tests\TestCase;
@@ -126,5 +127,19 @@ class TaskTest extends TestCase
             Task::where('id', $task->id)
                 ->first()
                 ->toArray());
+    }
+
+    /**
+     * test change status task
+     */
+    public function test_change_status_task()
+    {
+        $task = factory(Task::class,1)
+            ->create()
+            ->first();
+        $this->loginAs($task->user)
+            ->json('POST',route('task.status', $task),['status'=>'close'])
+            ->assertStatus(200);
+        $this->assertEquals(Task::find($task->id)->status,'close');
     }
 }
