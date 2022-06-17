@@ -1,30 +1,24 @@
 <?php
 
-namespace Amirabbas8643\Todo\Http\Controllers;
+namespace Amirabbas8643\Todo\Http\Controllers\Api;
 
+use Amirabbas8643\Todo\Http\Controllers\Controller;
 use Amirabbas8643\Todo\Http\Facades\JsonResponse;
 use Amirabbas8643\Todo\Http\Requests\Task\TaskStoreRequest;
 use Amirabbas8643\Todo\Http\Requests\Task\TaskUpdateRequest;
-use Amirabbas8643\Todo\Http\Resources\TaskEditResource;
 use Amirabbas8643\Todo\Http\Resources\TaskResource;
 use Amirabbas8643\Todo\Models\Task;
-use Amirabbas8643\Todo\Service\LabelService;
 use Amirabbas8643\Todo\Service\TaskService;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\View\View;
 
 class TaskController extends Controller
 {
 
     private $taskService;
 
-    private $labelService;
-
-    public function __construct(TaskService $taskService , LabelService $labelService)
+    public function __construct(TaskService $taskService)
     {
         $this->taskService = $taskService;
-        $this->labelService = $labelService;
     }
 
     /**
@@ -36,19 +30,8 @@ class TaskController extends Controller
     {
         $tasks = $this->taskService->getMyTasks();
         $tasks->setCollection(TaskResource::collection($tasks->getCollection())->collection);
-        return JsonResponse::success($tasks);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return View
-     */
-    public function create()
-    {
-        return view('Todo::task.create' , [
-            'labels'    => $this->labelService->getList() ,
-            'pageTitle' => __('Task Create') ,
-        ]);
+        return JsonResponse::success($tasks);
     }
 
     /**
@@ -59,6 +42,7 @@ class TaskController extends Controller
      */
     public function store(TaskStoreRequest $request)
     {
+        dd('$vars');
         $task = $this->taskService->createTask($request);
         if(is_array($request->get('labels')))
         {
@@ -72,26 +56,13 @@ class TaskController extends Controller
      * Display the specified resource.
      *
      * @param Task $task
-     * @return Response
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function show(Task $task)
     {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Task $task
-     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
-     */
-    public function edit(Task $task)
-    {
         $this->authorize('update' , $task);
-        return JsonResponse::success([
-            'labels'    => $this->labelService->getList() ,
-            'task'      => (new TaskEditResource($task))->resolve() ,
-            'pageTitle' => __('Task Edit') ,
-        ]);
+
+        return JsonResponse::success((new TaskResource($task)));
     }
 
     /**

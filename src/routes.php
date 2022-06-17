@@ -1,7 +1,7 @@
 <?php
 
-use Amirabbas8643\Todo\Http\Controllers\LabelController;
-use Amirabbas8643\Todo\Http\Controllers\TaskController;
+use Amirabbas8643\Todo\Http\Controllers\Api\LabelController;
+use Amirabbas8643\Todo\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

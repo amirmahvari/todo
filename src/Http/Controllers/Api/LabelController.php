@@ -1,5 +1,5 @@
 <?php
-namespace Amirabbas8643\Todo\Http\Controllers;
+namespace Amirabbas8643\Todo\Http\Controllers\Api;
 
 use Amirabbas8643\Todo\Http\Requests\Label\LabelStoreRequest;
 use Amirabbas8643\Todo\Http\Requests\Label\LabelUpdateRequest;
@@ -33,17 +33,6 @@ class LabelController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('Todo::label.create' , [
-            'pageTitle' => __('Create Label') ,
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -64,20 +53,6 @@ class LabelController extends Controller
     public function show(Label $label)
     {
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Label $label
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Label $label)
-    {
-        return view('Todo::label.edit' , [
-            'label'      => $label ,
-            'pageTitle' => __('Edit Label'),
-        ]);
     }
 
     /**
