@@ -56,6 +56,7 @@ class TaskService
 
     public function delete(Task $task)
     {
-        $task->delete();
+        $task->labels()->detach();
+       return $task->delete();
     }
 }

@@ -9,6 +9,8 @@ use Amirabbas8643\Todo\Http\Requests\Task\TaskUpdateRequest;
 use Amirabbas8643\Todo\Http\Resources\TaskResource;
 use Amirabbas8643\Todo\Models\Task;
 use Amirabbas8643\Todo\Service\TaskService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Routing\Redirector;
 
 class TaskController extends Controller
@@ -69,7 +71,7 @@ class TaskController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Task $task
-     * @return Redirector
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
      */
     public function update(TaskUpdateRequest $request , Task $task)
     {
@@ -80,30 +82,21 @@ class TaskController extends Controller
             $this->taskService->syncLabels($task , $request->get('labels'));
         }
 
-        return redirect(route('task.index'));
+        return JsonResponse::success(new TaskResource($task),__('Updated Task'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Task $task
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \Amirabbas8643\Todo\Http\Responses\JsonResponse
+     * @throws AuthorizationException
      */
     public function destroy(Task $task)
     {
         $this->authorize('delete' , $task);
         $this->taskService->delete($task);
-
-        return redirect(route('label.index'));
+        return JsonResponse::success(null,__('Deleted Task'));
     }
 
-    /**
-     * @param Task $task
-     */
-    public function add_label(Task $task , $label)
-    {
-        return $task->labels()
-            ->pluck('label_id')->aa;
-    }
 }

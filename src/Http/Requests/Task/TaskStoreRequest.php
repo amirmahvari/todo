@@ -1,10 +1,12 @@
 <?php
+
 namespace Amirabbas8643\Todo\Http\Requests\Task;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaskStoreRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,6 +27,7 @@ class TaskStoreRequest extends FormRequest
         return [
             'title'       => ['required'] ,
             'description' => ['required'] ,
+            'labels.*'    => ['nullable' , 'exists:labels,id'] ,
         ];
     }
 }

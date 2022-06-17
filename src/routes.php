@@ -6,23 +6,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix'     => 'todo' ,
-    'middleware' => 'auth',
+    'middleware' => 'auth' ,
 ] , function()
 {
     Route::prefix('task')
         ->name('task.')
         ->group(function()
         {
-            Route::get('' , [TaskController::class , 'index'])->name('index');
-            Route::get('{task}' , [TaskController::class , 'show'])->name('show');
-            Route::post('' , [TaskController::class , 'store'])->name('store');
-            Route::post('{task}/status' , [TaskController::class , 'status'])->name('status');
-            Route::patch('{id}' , [TaskController::class , 'update'])->name('update');
-            Route::group(['prefix' => '{task}/labels/'] , function()
-            {
-                Route::post('' , [TaskController::class , 'addLabels']);
-                Route::post('assign' , [TaskController::class , 'assignLabels']);
-            });
+            Route::get('' , [TaskController::class , 'index'])
+                ->name('index');
+            Route::get('{task}' , [TaskController::class , 'show'])
+                ->name('show');
+            Route::post('' , [TaskController::class , 'store'])
+                ->name('store');
+            Route::post('{task}/status' , [TaskController::class , 'status'])
+                ->name('status');
+            Route::patch('{task}' , [TaskController::class , 'update'])
+                ->name('update');
+            Route::delete('destroy/{task}' , [TaskController::class , 'destroy'])
+                ->name('destroy');
+
         });
     Route::group(['prefix' => 'labels/'] , function()
     {
