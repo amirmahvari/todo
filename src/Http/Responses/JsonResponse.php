@@ -51,7 +51,7 @@ class JsonResponse
     {
         return response()->json([
             'status'  => Response::HTTP_NOT_FOUND ,
-            'success' => true ,
+            'success' => false ,
             'message' => 'not found' ,
         ] , Response::HTTP_NOT_FOUND);
     }
@@ -64,8 +64,8 @@ class JsonResponse
     public function unauthorized()
     {
         return response()->json([
-            'status'  => Response::HTTP_NOT_FOUND ,
-            'success' => true ,
+            'status'  => Response::HTTP_UNAUTHORIZED ,
+            'success' => false ,
             'message' => 'Unauthorized' ,
         ] , Response::HTTP_UNAUTHORIZED);
     }
