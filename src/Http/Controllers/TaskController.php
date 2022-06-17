@@ -18,11 +18,7 @@ class TaskController extends Controller
 
     public function __construct(TaskService $taskService , LabelService $labelService)
     {
-        $this->middleware([
-            \Illuminate\Session\Middleware\StartSession::class ,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class ,
-            'auth'
-        ]);
+        $this->middleware(['auth:web']);
         $this->taskService = $taskService;
         $this->labelService = $labelService;
     }

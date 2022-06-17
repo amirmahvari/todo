@@ -15,11 +15,7 @@ class LabelController extends Controller
 
     public function __construct(LabelService $labelService)
     {
-        $this->middleware([
-            \Illuminate\Session\Middleware\StartSession::class ,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class ,
-            'auth'
-        ]);
+        $this->middleware(['auth:web']);
         $this->labelService = $labelService;
     }
 
