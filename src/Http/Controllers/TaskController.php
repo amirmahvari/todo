@@ -7,8 +7,10 @@ use Amirabbas8643\Todo\Http\Resources\TaskEditResource;
 use Amirabbas8643\Todo\Service\LabelService;
 use Amirabbas8643\Todo\Service\TaskService;
 use Amirabbas8643\Todo\Models\Task;
+use App\User;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class TaskController extends Controller
@@ -18,7 +20,6 @@ class TaskController extends Controller
 
     public function __construct(TaskService $taskService , LabelService $labelService)
     {
-        $this->middleware(['auth:web']);
         $this->taskService = $taskService;
         $this->labelService = $labelService;
     }
@@ -30,10 +31,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('Todo::task.index' , [
-            'tasks'     => $this->taskService->getMyTasks() ,
-            'pageTitle' => 'Task List' ,
-        ]);
+        return $this->taskService->getMyTasks();
     }
 
     /**
@@ -79,11 +77,12 @@ class TaskController extends Controller
      *
      * @param Task $task
      * @return View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Task $task): View
     {
         $this->authorize('update' , $task);
-        return view('task.edit' , [
+        return view('Todo::task.edit' , [
             'labels'    => $this->labelService->getList() ,
             'task'      => (new TaskEditResource($task))->resolve() ,
             'pageTitle' => __('Task Edit') ,
@@ -120,5 +119,13 @@ class TaskController extends Controller
         $this->authorize('delete' , $task);
         $this->taskService->delete($task);
         return redirect(route('label.index'));
+    }
+
+    /**
+     * @param Task $task
+     */
+    public function add_label(Task $task,$label)
+    {
+        return $task->labels()->pluck('label_id')->aa;
     }
 }
