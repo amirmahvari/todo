@@ -4,6 +4,7 @@ namespace Amirmahvari\Todo\Tests\Feature;
 
 use Amirmahvari\Todo\Http\Resources\LabelResource;
 use Amirmahvari\Todo\Models\Label;
+use Amirmahvari\Todo\Models\Task;
 use App\User;
 use Tests\TestCase;
 
@@ -11,7 +12,7 @@ class LabelTest extends TestCase
 {
     public function loginAs()
     {
-        $user=factory(User::class)->create()->first();
+        $user = factory(User::class)->create()->first();
         return $this->actingAs($user)
             ->withHeaders([
                 'Authorization'    => 'Bearer ' . $user->api_token,
@@ -19,6 +20,20 @@ class LabelTest extends TestCase
                 "X-Requested-With" => "XMLHttpRequest",
             ]);
     }
+
+    /**
+     * get list label
+     * @return void
+     */
+    public function test_list_label()
+    {
+        $attributes = factory(Label::class)->make();
+        $this->loginAs()
+            ->json('POST', route('label.index'), $attributes->toArray())
+            ->assertStatus(200)
+            ->assertJsonCount(4);
+    }
+
 
     /**
      * A basic feature test example.
@@ -73,7 +88,7 @@ class LabelTest extends TestCase
             ->create()
             ->first();
         $this->loginAs()
-            ->json('PATCH',route('label.update', $label))
+            ->json('PATCH', route('label.update', $label))
             ->assertJsonValidationErrors(['label'])
             ->assertStatus(422);
     }
@@ -88,11 +103,27 @@ class LabelTest extends TestCase
             ->first();
         $attribute = factory(Label::class)->make();
         $this->loginAs($label->user)
-            ->json('PATCH',route('label.update', $label), $attribute->toArray())
+            ->json('PATCH', route('label.update', $label), $attribute->toArray())
             ->assertStatus(200);
         $this->assertDatabaseHas('labels',
             Label::where('id', $label->id)
                 ->first()
                 ->toArray());
+    }
+
+    /**
+     * test delete label
+     */
+    public function test_delete_label()
+    {
+        $labels=Label::count();
+        $label = factory(Label::class)
+            ->create()
+            ->first();
+        $this->loginAs()
+            ->json('DELETE', route('label.destroy', $label))
+            ->assertStatus(200)
+            ->assertJsonCount(4);
+        $this->assertDatabaseCount('labels',$labels);
     }
 }

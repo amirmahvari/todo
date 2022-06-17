@@ -3,7 +3,7 @@
 namespace Amirmahvari\Todo\Tests\Feature;
 
 use Amirmahvari\Todo\Http\Resources\LabelResource;
-use Amirmahvari\Todo\Http\Resources\TaskResource;
+use Amirmahvari\Todo\Models\Label;
 use Amirmahvari\Todo\Models\Task;
 use App\User;
 use Tests\TestCase;
@@ -21,7 +21,21 @@ class TaskTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * get list task
+     * @return void
+     */
+    public function test_list_task()
+    {
+        $attributes = factory(Task::class)->make();
+        $user = User::find($attributes->toArray()['user_id']);
+        $response = $this->loginAs($user)
+            ->json('POST', route('task.index'), $attributes->toArray())
+            ->assertStatus(200)
+            ->assertJsonCount(4);
+    }
+
+
+    /**
      * test  create task
      * @return void
      */
@@ -54,8 +68,8 @@ class TaskTest extends TestCase
         $task = factory(Task::class)
             ->create()
             ->first();
-        $this->loginAs(factory(User::class,1)->create()->first())
-            ->json('GET',route('task.show', $task))
+        $this->loginAs(factory(User::class, 1)->create()->first())
+            ->json('GET', route('task.show', $task))
             ->assertStatus(403);
     }
 
@@ -92,8 +106,8 @@ class TaskTest extends TestCase
         $task = factory(Task::class, 1)
             ->create()
             ->first();
-        $this->loginAs(factory(User::class,1)->create()->first())
-            ->json('PATCH',route('task.update', $task))
+        $this->loginAs(factory(User::class, 1)->create()->first())
+            ->json('PATCH', route('task.update', $task))
             ->assertStatus(403);
     }
 
@@ -106,7 +120,7 @@ class TaskTest extends TestCase
             ->create()
             ->first();
         $this->loginAs($task->user)
-            ->json('PATCH',route('task.update', $task))
+            ->json('PATCH', route('task.update', $task))
             ->assertJsonValidationErrors(['title', 'description'])
             ->assertStatus(422);
     }
@@ -121,7 +135,7 @@ class TaskTest extends TestCase
             ->first();
         $attribute = factory(Task::class)->make();
         $this->loginAs($task->user)
-            ->json('PATCH',route('task.update', $task), $attribute->toArray())
+            ->json('PATCH', route('task.update', $task), $attribute->toArray())
             ->assertStatus(200);
         $this->assertDatabaseHas('tasks',
             Task::where('id', $task->id)
@@ -134,12 +148,29 @@ class TaskTest extends TestCase
      */
     public function test_change_status_task()
     {
-        $task = factory(Task::class,1)
+        $task = factory(Task::class, 1)
             ->create()
             ->first();
         $this->loginAs($task->user)
-            ->json('POST',route('task.status', $task),['status'=>'close'])
+            ->json('POST', route('task.status', $task), ['status' => 'close'])
             ->assertStatus(200);
-        $this->assertEquals(Task::find($task->id)->status,'close');
+        $this->assertEquals(Task::find($task->id)->status, 'close');
+    }
+
+
+    /**
+     * test delete task
+     */
+    public function test_delete_task()
+    {
+        $tasks=Task::count();
+        $task = factory(Task::class)
+            ->create()
+            ->first();
+        $this->loginAs($task->user)
+            ->json('DELETE', route('task.destroy', $task))
+            ->assertStatus(200)
+            ->assertJsonCount(4);
+        $this->assertDatabaseCount('tasks',$tasks);
     }
 }
