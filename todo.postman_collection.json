@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "todo",
-		"_postman_id": "7b78cae0-f439-5592-12f7-4634e2c1e9e7",
+		"_postman_id": "4d6373e4-6b26-ac48-7f1b-5392e06c2231",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -41,6 +41,16 @@
 						"key": "Authorization",
 						"value": "Bearer {{token}}",
 						"description": ""
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {},
@@ -51,12 +61,22 @@
 		{
 			"name": "task show",
 			"request": {
-				"url": "http://127.0.0.1:8000/api/todo/task/12",
+				"url": "http://127.0.0.1:8000/api/todo/task/1",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
 						"value": "Bearer {{token}}",
+						"description": ""
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
 						"description": ""
 					}
 				],
@@ -98,7 +118,7 @@
 		{
 			"name": "task edit",
 			"request": {
-				"url": "http://127.0.0.1:8000/api/todo/task/12",
+				"url": "http://127.0.0.1:8000/api/todo/task/1",
 				"method": "PATCH",
 				"header": [
 					{
@@ -120,6 +140,36 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"title\":\"title\",\n\t\"description\":\"desc\",\n\t\"status\":\"open\",\n\t\"labels\":[\n\t\t1\n\t]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "task change status",
+			"request": {
+				"url": "http://127.0.0.1:8000/api/todo/task/1/status",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"status\":\"close\"\n}"
 				},
 				"description": ""
 			},
@@ -191,7 +241,10 @@
 						"description": ""
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"description": ""
 			},
 			"response": []
@@ -208,7 +261,10 @@
 						"description": ""
 					}
 				],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"description": ""
 			},
 			"response": []
@@ -237,7 +293,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"label\":\"title2\"\n}"
+					"raw": "{\n\t\"label\":\"warning\"\n}"
 				},
 				"description": ""
 			},
